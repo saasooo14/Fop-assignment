@@ -6,9 +6,10 @@ package text.adventure;
 
 
 import java.util.Scanner;
-   
+import java.util.Random;
 public class Map{
     public void map(){
+        Random rd = new Random();
         final int mapSize = 40;
         char[][] gameMap = new char[mapSize][mapSize];
 
@@ -22,11 +23,18 @@ public class Map{
         // Add obstacles (randomly in this example)
         int numObstacles = 15;
         for (int i = 0; i < numObstacles; i++) {
-            int x = (int) (Math.random() * mapSize);
-            int y = (int) (Math.random() * mapSize);
-            gameMap[y][x] = '#';
+            int x =rd.nextInt(39)+0;
+            int y = rd.nextInt(39)+0;
+            gameMap[x][y] = '#';
         }
-
+        
+        // create random monster 
+         int monster = 7;
+         for(int i=0; i<monster; i++){
+             int q = rd.nextInt(39)+1;
+             int w =rd.nextInt(39)+1;
+             gameMap[q][w]='M';
+         }
         // Initial player position
         int playerX = 20;
         int playerY = 20;
@@ -43,7 +51,7 @@ public class Map{
                     if (i == playerY && j == playerX) {
                         System.out.print("[P]");
                     } else {
-                        System.out.print("< " + gameMap[i][j] + " >");
+                        System.out.print("<" + gameMap[i][j] + ">");
                         // design the map
                     }
                 }
@@ -59,6 +67,7 @@ public class Map{
         
          
             // Update player's position based on input
+           
             if (move.equals("W") && playerY > 0 && gameMap[playerY - 1][playerX] != '#') {
                 playerY--;
                 
@@ -67,23 +76,28 @@ public class Map{
                  
             } else if (move.equals("S") && playerY < mapSize - 1 && gameMap[playerY + 1][playerX] != '#') {
                 playerY++;
+                
             } else if (move.equals("D") && playerX < mapSize - 1 && gameMap[playerY][playerX + 1] != '#') {
                 playerX++;
+                
             } else if (move.equals("Q")){
                 break; // Quit the game
+            }else{
+                System.out.println("Invalid input");
             }
             
           
             // Update the player's new position
             gameMap[playerY][playerX] = 'P';
           }
+          }
             
-        // Close the scanner
-        scanner.close();
-      
+       
          
-    }
-}
+         }
+    
+
+
 
 
     
